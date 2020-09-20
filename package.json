@@ -1,0 +1,26 @@
+{
+  "name": "zenn-content",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "textlint 'articles/**' 'books/**'",
+    "preview": "zenn preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/toshi-toma/zenn-content.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/toshi-toma/zenn-content/issues"
+  },
+  "homepage": "https://github.com/toshi-toma/zenn-content#readme",
+  "dependencies": {
+    "textlint": "^11.7.6",
+    "textlint-rule-preset-ja-technical-writing": "^4.0.1",
+    "zenn-cli": "^0.1.29"
+  }
+}
