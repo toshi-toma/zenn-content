@@ -151,7 +151,7 @@ https://svelte.dev/blog/svelte-3-rethinking-reactivity
 
 「No virtual DOM」と関連しますが、Svelteはコンパイル時に「値(state)の変更を検知してDOMへ反映する」コードを生成することで効率的な処理を可能にします。
 Svelteは、ある値が変更された際にそれをDOMに反映するような、Reactiveな処理を代入によってトリガーします。
-なので、配列の操作なども`numbers = [...numbers, numbers.length + 1];`, 値の更新も`number +- 1;`のように代入を使います。
+なので、配列の操作なども`numbers = [...numbers, numbers.length + 1];`, 値の更新も`number += 1;`のように代入を使います。
 
 コンパイル結果のコードでは、値が変更されるような代入式を、`$$invalidate(0, (count += 1));`と表現します。
 これでコンポーネントの値の変更を検知してDOMへ反映します。
