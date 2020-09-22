@@ -32,8 +32,6 @@ https://github.com/toshi-toma/svelte-todoapp
 
 しかし、ReactやVue.jsとは違い、SvelteはUIライブラリではなく、コンパイラです。
 
-宣言的なコードを、命令的なPureなJavaScriptコードに変換するコンパイラです。
-
 ## 概要
 
 Vue.jsの単一ファイルコンポーネント(SFC)のようなファイル構成で、`.svelte`ファイルの中にコンポーネントとしてHTML, CSS, JavaScript相当のコードを記述します。ReactやVue.jsのようにコンポーネントを組み合わせてWebアプリケーションを構築します。
