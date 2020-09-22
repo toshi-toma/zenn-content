@@ -2,39 +2,51 @@
 title: "Svelteとは"
 emoji: "‍💍"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["svelte"]
+topics: ["svelte", "javascript"]
 published: true
 ---
 
 # はじめに
 
-最近のフロントエンドでたまに聞く、Svelteというライブラリについての紹介記事です。
+最近、フロントエンドでたまに聞く、Svelteというライブラリについての紹介記事です。
 
 https://svelte.dev/
 
 ReactやVue.jsのような宣言的にUIを記述できるので、簡単にWebアプリケーションやUIを作れる。かつ、バンドルサイズやランタイムが小さく、高いパフォーマンスが期待できるライブラリです。
 
-まだコミュニティやエコシステムが成熟しているわけではないので、不都合はありますが、小さなアプリケーション開発のようなケースでは活躍するのではないかと思ったので紹介します。
+まだコミュニティやエコシステムが成熟しているわけではないので、不都合はありますが、小さなアプリケーション開発のようなケースでは活躍するのではないかと思っています。
+
+---
+
+Svelteで作成したToDoアプリのサンプルプロジェクトを以下のリポジトリで確認できます。
+
+https://github.com/toshi-toma/svelte-todoapp
 
 # Svelteとは
+
+## Svelteはコンパイラ
 
 「Svelteはコンパイラです」と説明されることが多いので、立ち位置が難しいですが、ReactやVue.jsではなくSvelteを採用する。そういうイメージです。
 
 なので、ライブラリとしての立ち位置としては、WebアプリケーションやUIを構築するためのライブラリです。
 
-しかし、ReactやVue.jsとは違い、SvelteはUIライブラリではなく、コンパイラーです。
+しかし、ReactやVue.jsとは違い、SvelteはUIライブラリではなく、コンパイラです。
 
----
+宣言的なコードを、命令的なPureなJavaScriptコードに変換するコンパイラです。
 
-Vue.jsの単一ファイルコンポーネント(SFC)のようなファイル構成で、`.svelte`ファイルの中にHTML, CSS, JavaScript相当のコードを記述します。
+## 概要
+
+Vue.jsの単一ファイルコンポーネント(SFC)のようなファイル構成で、`.svelte`ファイルの中にコンポーネントとしてHTML, CSS, JavaScript相当のコードを記述します。ReactやVue.jsのようにコンポーネントを組み合わせてWebアプリケーションを構築します。
+
 コンパイルすると、ライブラリのコードがほぼ無い状態のPureなJavaScriptファイルとCSSファイルが生成されます。
-
-最終的に、生成されたJSファイルとCSSファイルをHTMLを通してブラウザに読み込むだけです。
+あとは、生成されたJSファイルとCSSファイルをHTMLを通してブラウザに読み込むだけです。
 
 アプリケーションを構築する際に必要な記述量は、他のライブラリに比べると少ないです。
 ライブラリのコードがほぼ無く、コンパイル後のファイルサイズも小さいので、高いパフォーマンスが期待できます。
 
-Reactのように比較的大きいライブラリを読み込むほどではなく、小さいアプリをさくっと作るようなケースでは非常に活躍しそうです。
+Reactのように比較的大きいライブラリを読み込むほどではなく、小さいアプリをさくっと作るようなケースでは非常に活躍しそうですね。
+
+## 最近話題のSvelte
 
 [The State of JavaScript 2019](https://2019.stateofjs.com/)でも紹介されており、最近のFront-end-Frameworkで注目されていることが分かります。
 
@@ -76,11 +88,31 @@ Reactのように比較的大きいライブラリを読み込むほどではな
 <button on:click={increment}> + </button>
 ```
 
-これらがコンパイル後、以下のファイルとして変換されて、出力されるイメージです。
+# コンパイルで生成されるコード
+
+```js
+<script>
+  let name = "World!!";
+</script>
+
+<style>
+  h1 {
+    color: tomato;
+  }
+</style>
+
+<main>
+  <h1>Hello {name}!</h1>
+</main>
+```
+
+この`App.svelte`をコンパイルすると、以下のようにJavaScriptファイルとCSSファイルが出力されます。サンプルとして置いているbuildディレクトリのコードは、見やすいようにminifyを外しています。
 
 - JavaScriptファイル(例: bundle.js)
+  - [sample bundle.js](https://github.com/toshi-toma-sandbox/svelte-compiled-code/blob/master/public/build/bundle.js)
   - PureなJavaScript+Svelteのとても小さなランタイムコード
 - CSSファイル(例: bundle.css)
+  - [sample bundle.css](https://github.com/toshi-toma-sandbox/svelte-compiled-code/blob/master/public/build/bundle.css)
   - コンポーネント内で擬似的にスコープが閉じるように変換されたCSS
 
 公式サイトのREPLで、記述したSvelteファイルの挙動や出力結果を確認できます。
@@ -103,7 +135,7 @@ Sveteは、アプリケーションの構築に必要なコードの記述量が
 全体的にシンプルな記述に加えて、Vue.jsにあるような双方向バインディングが強力な点や、stateの更新はミュータブルに行うので記述量が減っています。
 
 同じことを実現するために必要なコード量は、ReactやVue.jsよりも少なくなります。
-記事で書かれている例だと、Reactで442文字、Vueで263文字、Svelteは145文字で実現できます。
+記事で書かれている例だと、Reactで442文字、Vue.jsで263文字、Svelteは145文字で実現できます。
 
 ここは簡単に書けるということで「Easy」だけど、「Simple」かどうかは別の話なので、好みは分かれそうです。（ただし、小さいアプリをさくっと作るケースなら本当に良さそう）
 
@@ -116,7 +148,7 @@ Svelteは、コンパイル時にどの値が変化するかを知ることで�
 全体のファイルサイズが小さくなり、ランタイムがより高速になります。
 コンパイル後のコードは、必要な処理だけが入ることになるので、ムダにサイズが大きくなるということもありません。
 
-## Truly reactive（SvelteはまさにReactiveを実現している）
+## Truly reactive（Reactive）
 https://svelte.dev/blog/svelte-3-rethinking-reactivity
 
 「No virtual DOM」と関連しますが、Svelteはコンパイル時に「値(state)の変更を検知してDOMへ反映する」コードを生成することで効率的な処理を可能にします。
@@ -164,12 +196,14 @@ Svelteは、ある値が変更された際にそれを参照している値に�
   - 簡単にWebアプリケーションを構築できる
 - 頑張らなくてもある程度は高いパフォーマンスが期待できる
   - バンドルサイズが小さい
-  - ライブラリのランタイムが、ないと言って良いレベル
+    - コンパイル時に必要なコードだけが含まれる
+    - バンドルサイズが小さいと初回の描画が早くなる
+  - ランタイムが小さい
+    - ライブラリのランタイムが、ないと言って良いレベル
     - もちろん規模が大きくなったり、重く非効率な処理をユーザーが書くと、それに比例して遅くはなります
 - 開発の構成がシンプル
   - テンプレートプロジェクトがあり、基本的にそのままの設定でいいはず
   - PureなJavaScriptとCSSだけが出力されて、それをHTMLで読み込むだけ
-    - 別でライブラリを読み込む必要がない
   - Webアプリケーションを構築するために必要な基本的な機能はSvelteに備わってる
     - UIの構築,スタイリング,アニメーション,ライフサイクル,State管理
 - 十分なDX(開発体験)
@@ -179,7 +213,7 @@ Svelteは、ある値が変更された際にそれを参照している値に�
 雑に書くと簡単にWebアプリケーションが作れて、ある程度高いパフォーマンスが期待でき、それでいて十分なDXで開発できる。
 
 ## デメリット
-- まだ世の中に情報が少ない
+- まだ世の中に情報や開発者が少ない
   - 記事などを調べてもあまり多くは見つからない
 - ReactやVue.jsなどに比べると、エコシステムが育ってない
   - Reactなどエコシステムが育った他のライブラリにあるような高いDXと比較すると不足しているものがある
@@ -297,7 +331,7 @@ e.g. `svelte-ts-sample.svelte`
 ## ブラウザ拡張
 ReactのDeveloper Toolsのような便利なブラウザ拡張が用意されています。
 
-これでコンポーネント名を使ったtreeが表示される。あとはコンポーネントのpropsとstateも確認可能。
+これでコンポーネント名を使ったtreeが表示されます。あとはコンポーネントのpropsとstateも確認可能です。
 
 - Chrome
   - https://chrome.google.com/webstore/detail/svelte-devtools/ckolcbmkjpjmangdbmnkpjigpkddpogn
@@ -310,6 +344,12 @@ ReactのDeveloper Toolsのような便利なブラウザ拡張が用意されて
 必要に応じて、PolyfillやBabelでのトランスパイルを通す必要があります。
 
 ## その他のエコシステム
+
+### Preprocess
+
+https://github.com/sveltejs/svelte-preprocess
+
+svelte-preprocessを使うことで、SassやPostCSS, Babel, TypeScriptといったライブラリと組み合わせることができます。
 
 ### Routing
 
