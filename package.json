@@ -20,7 +20,7 @@
   "homepage": "https://github.com/toshi-toma/zenn-content#readme",
   "dependencies": {
     "textlint": "^11.7.6",
-    "textlint-rule-preset-ja-technical-writing": "^4.0.1",
+    "textlint-rule-preset-ja-technical-writing": "^10.0.0",
     "zenn-cli": "^0.1.32"
   }
 }
