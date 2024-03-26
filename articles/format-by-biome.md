@@ -4,6 +4,7 @@ emoji: "📎"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["javascript", "typescript", "Biome"]
 published: false
+publication_name: "lincwell_inc"
 ---
 
 Web 開発のための高速なツールチェーンである [Biome](https://biomejs.dev/) が使われることが増えてきました。今のところ、linter と formatter の機能を備えています。
