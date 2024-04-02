@@ -157,3 +157,10 @@ TypeScript ファイルにだけ適用したい場合
 https://github.com/biomejs/biome/issues/1570
 
 結果的に organizeImports は OFF にして、ESLint で import 文の order 調整をするようにしました。
+
+# まとめ
+
+Biomeをフォーマッターとして使う部分にフォーカスして紹介しました。
+実際に使ってみて、普段の開発では1ファイルごとの保存時フォーマットなので速度面での違いは感じませんが、全ファイルに適用するケースでは高速だなと実感します。
+
+これから使っていく中でPrettierとの差としては、TypeScriptの新しい構文のサポート速度あたりが気になっています。
