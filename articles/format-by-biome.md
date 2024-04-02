@@ -3,7 +3,7 @@ title: "コードフォーマッターとしてBiomeを使う"
 emoji: "📎"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["javascript", "typescript", "Biome"]
-published: false
+published: true
 publication_name: "lincwell_inc"
 ---
 
