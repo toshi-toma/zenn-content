@@ -7,7 +7,7 @@ published: true
 publication_name: "lincwell_inc"
 ---
 
-Web 開発のための高速なツールチェーンである [Biome](https://biomejs.dev/) が使われることが増えてきました。今のところ、linter と formatter の機能を備えています。
+Web 開発のための高速なツールチェーンである [Biome](https://biomejs.dev/) の使用が増えてきました。今のところ、linter と formatter の機能を備えています。
 
 普段、JavaScript および TypeScript プロジェクトのコードフォーマッターには Prettier を使っていますが、速度面の魅力がある biome を使って見ました。ESLint で使いたいルールや plugin があるので、lint 機能は使わないで ESLint に任せる前提です。
 
@@ -15,7 +15,7 @@ Web 開発のための高速なツールチェーンである [Biome](https://bi
 
 # セットアップ
 
-ドキュメントに従ってセットアップするだけなので、導入はシンプルだと思います。
+ドキュメントに従ってセットアップするだけなので、導入はシンプルです。
 
 ```bash
 npm install --save-dev --save-exact @biomejs/biome
@@ -23,7 +23,7 @@ npm install --save-dev --save-exact @biomejs/biome
 
 意図しないタイミングで patch バージョンなどが上がり、format が変わらないようにバージョンは範囲演算子を使わない形が推奨されています。
 
-設定ファイルを出力します
+設定ファイルを出力します。
 
 ```bash
 npx @biomejs/biome init
@@ -50,7 +50,7 @@ npx @biomejs/biome init
 
 # フォーマットの実行
 
-フォーマットの実行
+フォーマットの実行は以下のコマンドで行います。
 
 ```bash
 npx @biomejs/biome format --write src
@@ -74,7 +74,7 @@ linter の機能は使わないので、設定で OFF にしておきます。
 
 https://biomejs.dev/analyzer/
 
-import の並び替え機能も用意されていますが、フォーマットではなく Analyzer という機能分類なので、利用したい場合は format ではなく check コマンドを使うことで、format と import の並び替えが適用されます。
+import の並び替え機能も用意されています。これはフォーマットではなく Analyzer という機能分類です。利用したい場合は format ではなく check コマンドを使うことで、format と import の並び替えが適用されます。
 
 ```bash
 npx @biomejs/biome check --apply src
@@ -82,7 +82,7 @@ npx @biomejs/biome check --apply src
 
 設定項目は`organizeImports`です。
 
-現状では Analyzer には Imports Sorting しか機能が無いようですが、今後利用したい機能が出てくる可能性を考慮して、フォーマッターとして使う場合も、check コマンドを利用するのが良さそうに思っています。
+現状では Analyzer には Imports Sorting しか機能がありません。しかし今後利用したい機能が出てくる可能性を考慮して、フォーマッターとして使う場合も、check コマンドを利用するのが良さそうです。
 
 # デフォルトフォーマット
 
@@ -92,7 +92,7 @@ biome は Prettier と違う点としてデフォルトがインデントタブ�
 
 https://sosukesuzuki.dev/posts/prettier-uses-tabs/
 
-Prettier との違いは以下のドキュメント参照
+Prettier との違いは以下のドキュメントを参照してください。
 
 https://biomejs.dev/formatter/differences-with-prettier/
 
@@ -102,7 +102,7 @@ https://biomejs.dev/formatter/differences-with-prettier/
 npx @biomejs/biome ci src
 ```
 
-organizeImports 使わない場合は以下でも OK
+organizeImports 使わない場合は以下でも OKです。
 
 ```bash
 npx @biomejs/biome format src
@@ -134,7 +134,7 @@ https://marketplace.visualstudio.com/items?itemName=biomejs.biome
 }
 ```
 
-TypeScript ファイルにだけ適用したい場合
+TypeScript ファイルにだけ適用したい場合は以下のように設定します。
 
 ```json
   "[typescript]": {
