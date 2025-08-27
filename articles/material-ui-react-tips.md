@@ -1,5 +1,5 @@
 ---
-title: "MUIを使う上で知っておきたいこと"
+title: "MUIを使う際に知っておきたいポイントまとめ"
 emoji: "🎨"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["mui", "react"]
