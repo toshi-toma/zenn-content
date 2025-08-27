@@ -1,23 +1,23 @@
 ---
-title: "MUIを使う上で知っておきたいことまとめ"
+title: "MUIを使う上で知っておきたいこと"
 emoji: "🎨"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["mui", "react", "typescript"]
+topics: ["mui", "react"]
 published: false
 publication_name: "lincwell_inc"
 ---
 
 # はじめに
 
-この記事では、React向けUIライブラリのMUI（Material UI）を実際のプロジェクトで使う際に知っておくと便利な知識やコツについてまとめて紹介します。
+最近、[MUI](https://mui.com/material-ui/)を使う機会があり、初見だとライブラリの基本的な概念や方針、スタイリングやカスタマイズはどのように行うのか、どの機能を使うのかといった点を把握するのに時間がかかりました。
 
-MUIはReactエコシステムで人気の高いUIライブラリです。しかし実際に使ってみると、カスタマイズの方法、型安全な使い方、パフォーマンスを考慮した使い方など、疑問が出てくることがあります。
+https://mui.com/
 
-この記事では、そうした疑問を解決するための実践的な知識を幅広くカバーしています。MUIを使ったことがある方にとって、より効率的で保守性の高い開発の参考になれば幸いです。
+この記事では、React向けUIライブラリのMUI（Material UI）を実際のプロジェクトで使う際に事前に知っておくとキャッチアップがスムーズにいきそうな点を紹介します。
 
-# MUIのライブラリ構成について
+# MUIのライブラリ構成や基本情報
 
-まず、MUIに関連するライブラリについて整理しましょう。
+まず、MUIに関連するライブラリについて整理します。
 
 ## 主要なライブラリ
 
@@ -27,8 +27,8 @@ MUIはReactエコシステムで人気の高いUIライブラリです。しか�
 
 **MUI System**
 - MUIに組み込まれているスタイリング系の機能を提供するライブラリ
-- sx propsやstyled関数などの機能はこちらで実装
-- スタイリングやレイアウト系の詳細な仕様については[MUI Systemのドキュメント](https://mui.com/system/getting-started/)を参照
+- MUIでスタイリングを行う際に利用するsx propsやstyled関数などの機能はこちらで実装
+- スタイリングやレイアウト系の詳細な仕様については[MUI Systemのドキュメント](https://mui.com/system/getting-started/)を参照する
 
 **Joy UI**
 - Material UIとは異なるデザインシステムのUIコンポーネントライブラリであった
@@ -36,23 +36,38 @@ MUIはReactエコシステムで人気の高いUIライブラリです。しか�
 
 ## FigmaのDesign Kits
 
-デザインとの連携を重視する場合、[MUIのFigma UI Kit](https://mui.com/store/items/figma-react/)が販売されています。Figmaを使ったデザインフローを採用している場合は必要になることが多いです。
+[MUIのFigma UI Kit](https://mui.com/store/items/figma-react/)が販売されています。Figmaを使ったデザインフローを採用する場合は必要になることが多いです。
+
+## MUI X
+
+MUIだけでは提供されていない機能(例えばDatePicker)については、[MUI X](https://mui.com/x/)を活用することで補完できます。DateTimePickerやグラフなど、より高度なコンポーネントが提供されています。
+基本的な機能は無料で利用できるが、日付の範囲選択機能など一部機能がPro Planとして有料で利用できます。
+
+## MUIのドキュメント
+
+[MUIのドキュメント](https://mui.com/material-ui/getting-started/)で基本的な使い方やコンポーネント、カスタマイズ方法などを知ることができます。
+ComponentsページとAPIページが分かれています。
+
+- **Componentsページ**: 各コンポーネントの使用例を確認。APIセクションにAPIドキュメントへの導線がある
+- **APIページ**: 渡せるpropsやCSS classesの詳細情報を確認。
+
 
 # スタイリングとカスタマイズ
 
-MUIのコンポーネントをカスタマイズする方法はいくつかありますが、用途に応じて使い分けることが重要です。
+MUIはsx propsというスタイリングの仕組みを提供しているため、CSS ModulesやTailwindのようなCSSライブラリを使う必要はなく、MUIだけで完結します。Themeとの連携を考えるとMUIのsx propsに寄せた方が良いです。
+また、コンポーネントをカスタマイズする方法はいくつかありますが、用途に応じて使い分けることが重要です。
 
 ## 基本的なスタイリング方針
 
-基本的にはコンポーネントにsxプロパティを渡すか、BoxやStackのようなレイアウト系のコンポーネントと組み合わせることで大部分のスタイリングは対応できます。
+基本的にはMUIのコンポーネントにsx propsを渡してスタイリングしたり、BoxやStackのようなレイアウト系のコンポーネントを組み合わせることで大部分のスタイリングは対応できます。
 
-従来のバージョンでは`mr={2}`のような形でmargin-rightを指定できるSystem Propsという仕組みがありましたが、これは非推奨になっているため、すべてsxに統一することを推奨します。
+従来のバージョンではコンポーネントのpropsで`mr={2}`のような形で`margin-right`を指定できるSystem Propsという仕組みがありましたが、これは非推奨になっているため、すべてsx propsに統一することを推奨します。
 
-## ある箇所でだけスタイルを変更する場合
+## 1箇所でだけスタイルを変更する場合
 
 **sx propsを渡す**
 
-最も基本的な方法です。ただし、sxはrootの要素にのみ適用されるため、コンポーネント内部の特定の要素をカスタマイズしたい場合は、CSS classを指定してカスタマイズする必要があります。
+最も基本的な方法です。ただし、sxはrootの要素にのみ適用されるため、コンポーネント内部の特定の要素をカスタマイズしたい場合は、CSS classを指定してカスタマイズする必要があります。各コンポーネントごとのAPIドキュメントに利用できるCSS classesが記載されています。
 
 ```tsx
 <Button
@@ -62,6 +77,9 @@ MUIのコンポーネントをカスタマイズする方法はいくつかあ�
     '&:hover': {
       backgroundColor: 'primary.dark',
     },
+    '& .Mui-disabled': {
+      backgroundColor: 'primary.dark'
+    }
   }}
 >
   カスタムボタン
@@ -87,7 +105,9 @@ const CustomButton = styled(Button)(({ theme }) => ({
 }));
 ```
 
-**重要**: styled関数を使う際は、@mui/systemではなく@mui/material/stylesからimportしてください。@mui/systemを使うとThemeの型定義が利用できません。
+:::message
+styled関数を使う際は、`@mui/system`ではなく`@mui/material/styles`からimportしてください。`@mui/system`を使うとThemeの型定義の変更が反映されません。
+:::
 
 ## コンポーネントのベースとなるスタイルを変更する場合
 
@@ -99,11 +119,11 @@ const CustomButton = styled(Button)(({ theme }) => ({
 
 デフォルトのテーマがありますが、そのまま使うことは少ないため、基本的にはカスタマイズすることになります。
 
-[デフォルトテーマ](https://mui.com/material-ui/customization/default-theme/)の内容を確認して、どの部分をカスタマイズするかを決めましょう。
+[デフォルトテーマ](https://mui.com/material-ui/customization/default-theme/)を見ると初期で設定されている値が分かります。
 
 ## createThemeを使ったカスタマイズ
 
-createThemeにカスタマイズする内容を入れることで、テーマを拡張できます。
+createThemeにカスタマイズする内容を入れることで、テーマを拡張できます。デフォルト値の上書きです。
 
 ```tsx
 import { createTheme } from '@mui/material/styles';
@@ -130,13 +150,7 @@ const theme = createTheme({
 });
 ```
 
-## typographyの追加
-
 デフォルトにはないtypographyのvariantを追加できます。上記の例では`body3`を追加していますが、これを使うためには型定義の拡張も必要です。
-
-## 色の追加および色の名前空間
-
-独自のカラーパレットを追加することで、ブランドカラーなどを統一的に管理できます。
 
 ## コンポーネントのデフォルトスタイルやpropsの変更
 
@@ -145,10 +159,9 @@ const theme = createTheme({
 ```tsx
 const theme = createTheme({
   components: {
-    MuiButton: {
+    MuiButtonBase: {
       defaultProps: {
-        variant: 'contained',
-        disableElevation: true,
+        disableRipple: true,
       },
       styleOverrides: {
         root: {
@@ -160,24 +173,33 @@ const theme = createTheme({
 });
 ```
 
-# 型定義の拡張
+## 型定義の拡張
 
-MUIをTypeScriptで使う場合、カスタマイズした内容に対して型定義を拡張する必要があります。
+MUIをTypeScriptで使う場合、Themeでカスタマイズした内容を型定義に反映する必要があります。
 
-## カスタムvariantの型定義
+### カスタムvariantの型定義
 
-デフォルトには存在しないvariantを追加する場合、以下のように型定義を拡張します。
+Typographyでデフォルトには存在しないvariantを追加する場合、以下のように型定義を拡張します。
 
 ```tsx
+declare module "@mui/material/styles" {
+  interface TypographyVariants {
+    body3: React.CSSProperties;
+  }
+  interface TypographyVariantsOptions {
+    body3: React.CSSProperties;
+  }
+}
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     body3: true;
-    body4: true;
   }
 }
 ```
 
-## sx propsでのタイプセーフティ向上
+他にも同様の方法でpaletteの名前空間やvariantを増やすこともできます。
+
+### sx propsからThemeへのアクセス
 
 sx propsで色やスペーシングを指定する際、文字列で指定すると型チェックが効きません。
 
@@ -192,71 +214,52 @@ sx propsで色やスペーシングを指定する際、文字列で指定する
 </TableCell>
 ```
 
-このような場合でも間違った値を指定してしまう可能性があるため、可能であればtheme objectを使った型安全な方法を検討すると良いでしょう。
+間違った値を指定してしまう可能性があるため、可能であればtheme objectを使ったり、文字列ではなく関数形式でtheme objectにアクセスする方法も検討すると良いでしょう。
 
-# 効率的な開発のための知識
 
-## MUIのimport
+# アップデートとメンテナンス
 
-パフォーマンスと開発効率の観点から、Barrelパターンの採用は避けて直接importすることを推奨します。
+## マイグレーションガイドの活用
 
-```tsx
-// 推奨
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+MUIのバージョンアップを行う際は、必ずマイグレーションガイドを確認しましょう。APIの破壊的変更については、多くの場合codemodが用意されています。
 
-// 非推奨
-import { Button, TextField } from '@mui/material';
+## codemodの活用
+
+codemodは、APIの変更を自動的に適用してくれるツールです。CSS Classesが変更されたりした場合も、codemodで移行できます。
+
+```bash
+npx @mui/codemod@latest <codemod-name> <path>
 ```
 
-この理由は以下の通りです。
-- **パフォーマンス**: 必要なコンポーネントのみがバンドルに含まれる
-- **@mui/codemodの活用**: 後述するcodemodツールの適切な動作
-
-## Slots Propsの活用
-
-古いバージョンでは`XXProps`という形でコンポーネントの特定パーツの差し替えやpropsの指定ができましたが、現在は`slots`と`slotProps`に統一されています。
-
-```tsx
-<TextField
-  slots={{
-    input: CustomInput,
-  }}
-  slotProps={{
-    input: {
-      customProp: 'value',
-    },
-  }}
-/>
-```
-
-## MUI Xの活用
-
-MUIだけでは提供されていない機能については、MUI Xを活用することで補完できます。DateTimePickerやデータテーブルなど、より高度なコンポーネントが提供されています。
-
-# 実装のコツと注意点
+# その他の補足情報
 
 ## 独自アイコンの定義
 
-MUIのアイコンセットにない独自のアイコンを使いたい場合は、SvgIconコンポーネントを使って定義できます。
+MUIのアイコンセットにない独自のアイコンを使いたい場合は、[SvgIconコンポーネント](https://mui.com/material-ui/icons/#svgicon)を使って定義できます。
 
 ```tsx
 import SvgIcon, { type SvgIconProps } from "@mui/material/SvgIcon";
 
 type IconProps = SvgIconProps;
 
-export const HospitalRoundedIcon = (props: IconProps) => (
+export const MyIcon = (props: IconProps) => (
   <SvgIcon {...props}>
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M17 5V7.00912H19C20.1 7.00912 21 7.90912 21 9.00912V19C21 20.1 20.1 21 19 21H14C13.45 21 13 20.55 13 20V17H11V20C11 20.55 10.55 21 10 21H5C3.9 21 3 20.1 3 19V9C3 7.9 3.9 7 5 7H7V5C7 3.9 7.9 3 9 3H15C16.1 3 17 3.9 17 5ZM10.6667 6.5C10.6667 6.22386 10.8905 6 11.1667 6H12.8333C13.1095 6 13.3333 6.22386 13.3333 6.5V8.66667H15.5C15.7761 8.66667 16 8.89052 16 9.16667V10.8333C16 11.1095 15.7761 11.3333 15.5 11.3333H13.3333V13.5C13.3333 13.7761 13.1095 14 12.8333 14H11.1667C10.8905 14 10.6667 13.7761 10.6667 13.5V11.3333H8.5C8.22386 11.3333 8 11.1095 8 10.8333V9.16667C8 8.89052 8.22386 8.66667 8.5 8.66667H10.6667V6.5Z"
-    />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="..."
+      />
+    </svg>
   </SvgIcon>
 );
 ```
 
-## Paperコンポーネントの注意点
+## Paperコンポーネント
 
 Paperコンポーネントは、アプリ側で直接使うことはほぼありません。しかし、MUIの多くのコンポーネントが内部的にPaperを使用しているため、Paperのベーススタイルをカスタマイズするとあらゆるコンポーネントにその影響が波及します。変更する際は注意が必要です。
 
@@ -271,49 +274,53 @@ Paperコンポーネントは、アプリ側で直接使うことはほぼあり
 </Stack>
 ```
 
-## ドキュメントの効果的な活用
+## MUIのimport
 
-MUIのドキュメントを効率的に使うために、以下の点を覚えておくと便利です。
+[開発体験のパフォーマンス観点](https://mui.com/material-ui/guides/minimizing-bundle-size/)からbarrel importsは避けた方が良いです。
+また、mui codemodへの対応観点から、ラッパーファイル経由でのimportは基本的には避けて直接importすることを推奨します。
+muiのcodemodは直接muiパッケージからimportされているファイルのみ対応してるため、直接importしておくことでAPIの移行が容易になります。
 
-- **Componentsページ**: 各コンポーネントの使用例を確認
-- **APIページ**: ページ下部にあるAPIセクションで、渡せるpropsやCSS classesの詳細情報を確認。
+```tsx
+// 推奨
+// sample.tsx
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
-# アップデートとメンテナンス
-
-## マイグレーションガイドの活用
-
-MUIのバージョンアップを行う際は、必ずマイグレーションガイドを確認しましょう。APIの破壊的変更については、多くの場合codemodが用意されています。
-
-## codemodの活用
-
-codemodは、APIの変更を自動的に適用してくれるツールです。CSS Classesが変更されたりした場合も、codemodで移行できることが多いです。
-
-```bash
-npx @mui/codemod@latest <codemod-name> <path>
+// 非推奨
+// mui.ts
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+export { Button, TextField }
+// sample.tsx
+import { Button, TextField } from './mui.ts';
 ```
 
-# その他の補足情報
+## Slots Propsの活用
+
+古いバージョンでは`XXProps`という形でコンポーネントの特定パーツの差し替えやpropsの指定ができましたが、現在は`slots`と`slotProps`に統一されています。
+
+```tsx
+<TextField
+  slots={{
+    input: CustomInput,
+  }}
+  slotProps={{
+    input: {
+      sx: {},
+    },
+  }}
+/>
+```
 
 ## 足りない機能の補完
 
-MUIには含まれていない機能もあります。例えば、ファイルのDrop系のコンポーネントはないため、react-dropzoneなどのライブラリと組み合わせて自作する必要があります。
+MUIには含まれていない機能も多くあります。例えば、ファイルのDrop系のコンポーネントは組み込みだとないため、react-dropzoneなどのライブラリと組み合わせて自作する必要があります。
 
-## 将来の展望
+## RSC対応
 
 RSC（React Server Components）サポートのため、ゼロランタイムCSSのPigment CSSという仕組みが開発されています。ただし、まだ実用段階ではないようです。詳細は[マイグレーションガイド](https://mui.com/material-ui/migration/migrating-to-pigment-css/)を参照してください。
 
 # まとめ
 
-MUIを実際のプロジェクトで使う際に知っておきたい様々な知識について紹介しました。
-
-特に重要なポイントは以下です。
-
-- **ライブラリ構成の理解**: Material UI、MUI System、Joy UIの違いを把握する
-- **効率的なカスタマイズ**: sx props、styled関数、themeを適切に使い分ける
-- **型定義の拡張**: TypeScriptプロジェクトでは型安全性を重視する
-- **パフォーマンスを意識したimport**: 直接importでバンドルサイズを最適化する
-- **アップデート対応**: codemodを活用して効率的に移行する
-
-MUIは非常に多機能なライブラリですが、これらの知識を持っておくことで、より効率的で保守性の高い開発ができるようになります。
-
-この記事が、MUIを使った開発の参考になれば幸いです。
+MUIを実際のプロジェクトで使う際、個人的に事前に知っておけると嬉しかった情報を紹介しました。
+この記事が、初めてMUIを使う際に参考になれば幸いです。
