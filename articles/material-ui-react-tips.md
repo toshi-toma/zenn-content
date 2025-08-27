@@ -13,7 +13,11 @@ publication_name: "lincwell_inc"
 
 https://mui.com/
 
-この記事では、React向けUIライブラリのMUI（Material UI）を実際のプロジェクトで使う際、事前に知っておくとキャッチアップがスムーズにいきそうな点を紹介します。
+この記事では、React向けUIライブラリのMUIを実際のプロジェクトで使う際、事前に知っておくとキャッチアップがスムーズにいきそうな点を紹介します。
+
+:::message
+この記事はMUI v7の情報を元に書いています
+:::
 
 # MUIのライブラリ構成や基本情報
 
@@ -201,7 +205,7 @@ declare module "@mui/material/Typography" {
 
 ### sx propsからThemeへのアクセス
 
-sx propsで色やスペーシングを指定する際、文字列で指定すると型チェックが効きません。
+sx propsで色などのTheme情報を指定する際、文字列で指定すると型チェックが効きません。
 
 ```tsx
 <TableCell
@@ -285,7 +289,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 // 非推奨
-// mui.ts
+// mui-wrapper.ts
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 export { Button, TextField }
