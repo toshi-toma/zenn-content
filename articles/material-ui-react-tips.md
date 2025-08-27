@@ -250,18 +250,12 @@ export const MyIcon = (props: IconProps) => (
       fill="none"
     >
       <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
         d="..."
       />
     </svg>
   </SvgIcon>
 );
 ```
-
-## Paperコンポーネント
-
-Paperコンポーネントは、アプリ側で直接使うことはほぼありません。しかし、MUIの多くのコンポーネントが内部的にPaperを使用しているため、Paperのベーススタイルをカスタマイズするとあらゆるコンポーネントにその影響が波及します。変更する際は注意が必要です。
 
 ## レイアウトコンポーネントの使い分け
 
@@ -273,6 +267,10 @@ Paperコンポーネントは、アプリ側で直接使うことはほぼあり
   <Button>ボタン2</Button>
 </Stack>
 ```
+
+## Paperコンポーネント
+
+Paperコンポーネントは、アプリ側で直接使うことはほぼありません。しかし、MUIの多くのコンポーネントが内部的にPaperを使用しているため、Paperのベーススタイルをカスタマイズするとあらゆるコンポーネントにその影響が波及します。変更する際は注意が必要です。
 
 ## MUIのimport
 
